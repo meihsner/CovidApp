@@ -68,3 +68,12 @@ def add_hospital(request):
         form_hospital.save()
         return redirect(main)
     return render(request, 'add_hospital.html', {'form_hospital': form_hospital})
+
+
+@login_required
+def add_city(request):
+    form_city = CityForm(request.POST or None)
+    if form_city.is_valid():
+        form_city.save()
+        return redirect(main)
+    return render(request, 'add_city.html', {'form_city': form_city})

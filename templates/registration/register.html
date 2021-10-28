@@ -1,0 +1,17 @@
+{% extends 'pattern.html' %}
+
+{% block title %} Rejestracja {% endblock %}
+
+{% block page %}
+    <form method="post">
+        {% csrf_token %}
+        <table class="table">
+            {{ form_new_user.as_table }}
+            <tr>
+                <td><input type="hidden" name="next" value="{{ next }}"></td>
+                <td><button type="submit" class="btn btn-primary">Zarejestruj</button></td>
+            </tr>
+        </table>
+    </form>
+    <a href="{% url 'main' %}" class="btn" >Powrót</a>
+{% endblock %}
