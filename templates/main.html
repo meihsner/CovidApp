@@ -8,18 +8,20 @@
   {% endif %}
 
   {% if perms.covid %}
-      <a href="{% url 'register' %}" class="btn">Zarejestruj użytkownika</a>  <a href="{% url 'add_person' %}" class="btn">Dodaj osobę</a>  <a href="{% url 'add_laboratory' %}" class="btn" >Dodaj placówkę laboratoryjną</a> <a href="{% url 'add_hospital' %}" class="btn" >Dodaj placówkę hospitalizującą</a> <br>
+      <a href="{% url 'register' %}" class="btn">Zarejestruj użytkownika</a>  <a href="{% url 'add_person' %}" class="btn">Dodaj osobę</a>  <a href="{% url 'add_laboratory' %}" class="btn" >Dodaj placówkę laboratoryjną</a> <a href="{% url 'add_hospital' %}" class="btn" >Dodaj placówkę hospitalizującą</a><a href="{% url 'add_city' %}" class="btn" >Dodaj miasto</a> <br>
   {% else %}
-      <a href="{% url 'add_person' %}" class="btn">Dodaj osobę</a>  <a href="{% url 'add_laboratory' %}" class="btn" >Dodaj placówkę laboratoryjną</a> <a href="{% url 'add_hospital' %}" class="btn" >Dodaj placówkę hospitalizującą</a> <br>
+      <a href="{% url 'add_person' %}" class="btn">Dodaj osobę</a>  <a href="{% url 'add_laboratory' %}" class="btn" >Dodaj placówkę laboratoryjną</a> <a href="{% url 'add_hospital' %}" class="btn" >Dodaj placówkę hospitalizującą</a> <a href="{% url 'add_city' %}" class="btn" >Dodaj miasto</a> <br>
   {% endif %}
 
   <br>
   <br>
   <h2>Lista osób aktualnie widniejących w bazie danych</h2>
   {% for person in people %}
-    {{ person.id }} {{ person.name }} {{ person.surname }} <a href="{% url 'edit_person' person.id %}" class="btn" >Edytuj osobę</a> <a href="{% url 'delete_person' person.id %}" class="btn" >Usuń osobę</a> <br>
+    {{ person.id }} {{ person.name }} {{ person.surname }} <a href="{% url 'edit_person' person.id %}" class="btn" >Edytuj osobę</a> <a href="{% url 'delete_person' person.id %}" class="btn" >Usuń osobę</a> <button type="button">Generuj zawiadomienie</button> <br>
   {% endfor %}
   <br>
   <br>
+
+  <button type="button">Eksportuj formularz</button> <br>
   <a href="{% url 'logout' %}" class="btn" >Wyloguj</a>
 {% endblock %}

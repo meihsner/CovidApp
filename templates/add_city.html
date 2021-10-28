@@ -3,6 +3,11 @@
 {% block title %} Dodaj osobę {% endblock %}
 
 {% block page %}
+    <h2>Ostatnio dodane miasta:</h2>
+    {% for city in cities %}
+        {{ city.name }} {{ city.county }} {{ city.province }} <br>
+    {% endfor %}
+    <br>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form_city }}

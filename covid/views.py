@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .models import Person
+from .models import Person, City
 from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm
 from django.contrib.auth.forms import UserCreationForm
 
@@ -72,8 +72,13 @@ def add_hospital(request):
 
 @login_required
 def add_city(request):
+    if City.objects.count() <= 5:
+        cities = City.objects.order_by('-id')
+    else:
+        cities = City.objects.order_by('-id')[0:6]
+
     form_city = CityForm(request.POST or None)
     if form_city.is_valid():
         form_city.save()
-        return redirect(main)
-    return render(request, 'add_city.html', {'form_city': form_city})
+        return redirect(add_city)
+    return render(request, 'add_city.html', {'form_city': form_city, 'cities': cities})
