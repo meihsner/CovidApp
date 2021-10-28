@@ -1,0 +1,25 @@
+{% extends 'pattern.html' %}
+
+{% block title %} Main page {% endblock %}
+
+{% block page %}
+  {% if user.is_authenticated %}
+    <h2 class="display-4">Witaj {{ user.username }}!</h2>
+  {% endif %}
+
+  {% if perms.covid %}
+      <a href="{% url 'register' %}" class="btn">Zarejestruj użytkownika</a>  <a href="{% url 'add_person' %}" class="btn">Dodaj osobę</a>  <a href="{% url 'add_laboratory' %}" class="btn" >Dodaj placówkę laboratoryjną</a> <a href="{% url 'add_hospital' %}" class="btn" >Dodaj placówkę hospitalizującą</a> <br>
+  {% else %}
+      <a href="{% url 'add_person' %}" class="btn">Dodaj osobę</a>  <a href="{% url 'add_laboratory' %}" class="btn" >Dodaj placówkę laboratoryjną</a> <a href="{% url 'add_hospital' %}" class="btn" >Dodaj placówkę hospitalizującą</a> <br>
+  {% endif %}
+
+  <br>
+  <br>
+  <h2>Lista osób aktualnie widniejących w bazie danych</h2>
+  {% for person in people %}
+    {{ person.id }} {{ person.name }} {{ person.surname }} <a href="{% url 'edit_person' person.id %}" class="btn" >Edytuj osobę</a> <a href="{% url 'delete_person' person.id %}" class="btn" >Usuń osobę</a> <br>
+  {% endfor %}
+  <br>
+  <br>
+  <a href="{% url 'logout' %}" class="btn" >Wyloguj</a>
+{% endblock %}

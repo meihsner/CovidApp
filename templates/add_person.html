@@ -1,0 +1,13 @@
+{% extends 'pattern.html' %}
+
+{% block title %} Dodaj osobę {% endblock %}
+
+{% block page %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form_person }}
+        <button type="submit">Dodaj</button>
+    </form>
+
+    <a href="{% url 'main' %}" class="btn" >Powrót</a>
+{% endblock %}

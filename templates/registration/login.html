@@ -1,0 +1,12 @@
+{% extends 'pattern.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block page %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Zaloguj</button>
+    </form>
+
+{% endblock %}
