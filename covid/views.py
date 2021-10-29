@@ -4,6 +4,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import Person, City, Hospital, Laboratory
 from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm
 from django.contrib.auth.forms import UserCreationForm
+import xlwt
+from django.http import HttpResponse
 
 
 @staff_member_required
@@ -40,7 +42,7 @@ def edit_person(request, id):
     if form_person.is_valid():
         form_person.save()
         return redirect(main)
-    return render(request, 'add_person.html', {'form_person': form_person})
+    return render(request, 'edit_person.html', {'form_person': form_person})
 
 
 @login_required
@@ -92,3 +94,41 @@ def add_city(request):
         form_city.save()
         return redirect(add_city)
     return render(request, 'add_city.html', {'form_city': form_city, 'cities': cities})
+
+
+def export_users_xls(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="PSSE Gliwice.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('wyniki dodatnie - całość')
+
+    # Sheet header, first row
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['imię', 'nazwisko', 'płeć', 'wiek', 'Miejscowość zamieszkania chorego', 'Numer telefonu', 'Data pozyskania informacji przez PSSE',
+              'Data uzyskania wyniku dodatniego', 'Laboratorium wykonujące badanie', 'Miejscowość  pobytu chorego', 'źródło zakażenia',
+              'Hospitalizowany tak/nie', 'Nazwa szpitala', 'Objęty nadzorem tak/nie', 'Poddany kwarantannie tak/nie']
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style) # at 0 row 0 column
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+
+    rows = Person.objects.all().values_list('name', 'surname', 'gender', 'age', 'city', 'telephone_number', 'date_of_received_information',
+              'date_of_positive_result', 'laboratory_performing_tests', 'whereabouts', 'source_of_infection',
+              'hospitalization', 'hospital', 'supervision', 'quarantine')
+
+
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+
+    return response

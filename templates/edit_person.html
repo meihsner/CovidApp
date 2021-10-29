@@ -1,0 +1,14 @@
+{% extends 'pattern.html' %}
+{% load bootstrap %}
+
+{% block title %} Edytuj osobę {% endblock %}
+
+{% block page %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form_person|bootstrap }}
+        <button type="submit">Zatwierdź</button>
+    </form>
+
+    <a href="{% url 'main' %}" class="btn" >Powrót</a>
+{% endblock %}

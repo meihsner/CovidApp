@@ -22,6 +22,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th scope="col">id</th>
           <th scope="col">Imię</th>
           <th scope="col">Nazwisko</th>
           <th scope="col">Wiek</th>
@@ -32,6 +33,7 @@
       <tbody>
         {% for person in people %}
         <tr>
+          <td>{{ person.id }}</td>
           <td>{{ person.name }}</td>
           <td>{{ person.surname }}</td>
           <td>{{ person.age }}</td>
@@ -43,8 +45,9 @@
     </table>
     <br>
     <br>
-
-  <button type="button" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></button> <br>
+  <a href="{% url 'export_excel' %}" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></a>
+    <br>
+    <br>
   <a href="{% url 'logout' %}" class="btn btn-secondary">Wyloguj</a>
 
   </div>
