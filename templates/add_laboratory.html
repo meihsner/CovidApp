@@ -1,11 +1,17 @@
 {% extends 'pattern.html' %}
+{% load bootstrap %}
 
 {% block title %} Dodaj osobę {% endblock %}
 
 {% block page %}
+    <h2>Ostatnio dodane laboratorium:</h2>
+    {% for laboratory in laboratories %}
+        {{ laboratory.name }} --- {{ laboratory.address }} --- {{ laboratory.city }} <br>
+    {% endfor %}
+    <br>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form_laboratory }}
+        {{ form_laboratory|bootstrap }}
         <button type="submit">Dodaj</button>
     </form>
     <a href="{% url 'main' %}" class="btn" >Powrót</a>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .models import Person, City
+from .models import Person, City, Hospital, Laboratory
 from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm
 from django.contrib.auth.forms import UserCreationForm
 
@@ -54,20 +54,30 @@ def delete_person(request, id):
 
 @login_required
 def add_laboratory(request):
+    if Laboratory.objects.count() <= 5:
+        laboratories = Laboratory.objects.order_by('-id')
+    else:
+        laboratories = Laboratory.objects.order_by('-id')[0:6]
+
     form_laboratory = LaboratoryForm(request.POST or None)
     if form_laboratory.is_valid():
         form_laboratory.save()
         return redirect(main)
-    return render(request, 'add_laboratory.html', {'form_laboratory': form_laboratory})
+    return render(request, 'add_laboratory.html', {'form_laboratory': form_laboratory, 'laboratories': laboratories})
 
 
 @login_required
 def add_hospital(request):
+    if Hospital.objects.count() <= 5:
+        hospitals = Hospital.objects.order_by('-id')
+    else:
+        hospitals = Hospital.objects.order_by('-id')[0:6]
+
     form_hospital = HospitalForm(request.POST or None)
     if form_hospital.is_valid():
         form_hospital.save()
         return redirect(main)
-    return render(request, 'add_hospital.html', {'form_hospital': form_hospital})
+    return render(request, 'add_hospital.html', {'form_hospital': form_hospital, 'hospitals': hospitals})
 
 
 @login_required

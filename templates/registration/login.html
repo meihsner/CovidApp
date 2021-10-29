@@ -1,11 +1,12 @@
 {% extends 'pattern.html' %}
+{% load bootstrap %}
 
 {% block title %} Login {% endblock %}
 
 {% block page %}
     <form method="POST">
         {% csrf_token %}
-        {{ form }}
+        {{ form|bootstrap }}
         <button type="submit">Zaloguj</button>
     </form>
 

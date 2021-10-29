@@ -1,11 +1,17 @@
 {% extends 'pattern.html' %}
+{% load bootstrap %}
 
-{% block title %} Dodaj osobę {% endblock %}
+{% block title %} Dodaj szpital {% endblock %}
 
 {% block page %}
+    <h2>Ostatnio dodany szpital:</h2>
+    {% for hospital in hospitals %}
+        {{ hospital.name }} --- {{ hospital.address }} --- {{ hospital.city }} <br>
+    {% endfor %}
+    <br>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form_hospital }}
+        {{ form_hospital|bootstrap }}
         <button type="submit">Dodaj</button>
     </form>
     <a href="{% url 'main' %}" class="btn" >Powrót</a>
