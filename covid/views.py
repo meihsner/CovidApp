@@ -6,6 +6,7 @@ from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm
 from django.contrib.auth.forms import UserCreationForm
 import xlwt
 from django.http import HttpResponse
+from datetime import datetime
 
 
 @staff_member_required
@@ -22,7 +23,10 @@ def user_registration(request):
 
 @login_required
 def main(request):
-    people = Person.objects.all()
+    try:
+            people = Person.objects.filter(surname__icontains=request.GET.get('search'))
+    except ValueError:
+        people = Person.objects.all()
     return render(request, 'main.html', {'people': people})
 
 
@@ -96,38 +100,84 @@ def add_city(request):
     return render(request, 'add_city.html', {'form_city': form_city, 'cities': cities})
 
 
+@login_required
 def export_users_xls(request):
+    current_date = datetime.now().date()
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="PSSE Gliwice.xls"'
+    response['Content-Disposition'] = 'attachment; filename="PSSE {}.xls"'.format(current_date)
 
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('wyniki dodatnie - całość')
+    ws = wb.add_sheet('Spis osób z wynikiem dodatnim')
 
     # Sheet header, first row
     row_num = 0
+    column_width = [7, 20, 20, 7, 7, 30, 20, 30, 30, 30, 30, 30, 25, 27, 27, 25]
+    for idx in range(0, len(column_width)):
+        ws.col(idx).width = 256 * column_width[idx]
 
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['imię', 'nazwisko', 'płeć', 'wiek', 'Miejscowość zamieszkania chorego', 'Numer telefonu', 'Data pozyskania informacji przez PSSE',
-              'Data uzyskania wyniku dodatniego', 'Laboratorium wykonujące badanie', 'Miejscowość  pobytu chorego', 'źródło zakażenia',
-              'Hospitalizowany tak/nie', 'Nazwa szpitala', 'Objęty nadzorem tak/nie', 'Poddany kwarantannie tak/nie']
+    alignment = xlwt.Alignment()
+    alignment.horz = xlwt.Alignment.HORZ_CENTER
+    alignment.vert = xlwt.Alignment.VERT_CENTER
+    alignment.wrap = 1
+    borders = xlwt.Borders()
+    borders.left = xlwt.Borders.THIN
+    borders.right = xlwt.Borders.THIN
+    borders.top = xlwt.Borders.THIN
+    borders.bottom = xlwt.Borders.THIN
+
+    font_style.alignment = alignment
+    font_style.borders =borders
+
+
+    columns = ['Id', 'Imię', 'Nazwisko', 'Płeć', 'Wiek', 'Miejscowość zamieszkania chorego', 'Numer telefonu', 'Data pozyskania informacji przez PSSE',
+              'Data uzyskania wyniku dodatniego', 'Laboratorium wykonujące badanie', 'Miejscowość pobytu chorego', 'Źródło zakażenia',
+              'Hospitalizowany', 'Nazwa szpitala', 'Objęty nadzorem', 'Poddany kwarantannie']
 
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style) # at 0 row 0 column
+        ws.write(row_num, col_num, columns[col_num], font_style)
 
-    # Sheet body, remaining rows
-    font_style = xlwt.XFStyle()
+    person_table = Person.objects.all().values('name', 'surname', 'gender', 'age', 'city__name', 'telephone_number', 'date_of_received_information',
+              'date_of_positive_result', 'laboratory_performing_tests__name', 'whereabouts__name', 'source_of_infection',
+              'hospitalization', 'hospital__name', 'supervision', 'quarantine')
 
-    rows = Person.objects.all().values_list('name', 'surname', 'gender', 'age', 'city', 'telephone_number', 'date_of_received_information',
-              'date_of_positive_result', 'laboratory_performing_tests', 'whereabouts', 'source_of_infection',
-              'hospitalization', 'hospital', 'supervision', 'quarantine')
+    for item in person_table:
+        item['date_of_positive_result'] = str(item['date_of_positive_result'])
+        item['date_of_received_information'] = str(item['date_of_received_information'])
 
+    data = [item for item in person_table]
+    for item in data:
+        tmp_gender = Person(gender=item['gender'])
+        item['gender'] = tmp_gender.get_gender_display()
 
-    for row in rows:
+        tmp_hospitalization = Person(hospitalization=item['hospitalization'])
+        item['hospitalization'] = tmp_hospitalization.get_hospitalization_display()
+
+        tmp_supervision = Person(supervision=item['supervision'])
+        item['supervision'] = tmp_supervision.get_supervision_display()
+
+        tmp_quarantine = Person(quarantine=item['quarantine'])
+        item['quarantine'] = tmp_quarantine.get_quarantine_display()
+
+    hospitalized_font = 'font: italic  1, color red;'
+    normal_font = 'font: italic  1, color black;'
+
+    person_excel_id = 1
+    for row in person_table:
+        row = list(row.values())
+        row.insert(0, person_excel_id)
         row_num += 1
+        if row[-4] == "Tak":
+            style = xlwt.easyxf(hospitalized_font)
+            style.alignment = alignment
+        else:
+            style = xlwt.easyxf(normal_font)
+            style.alignment = alignment
         for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], font_style)
+            ws.write(row_num, col_num, row[col_num], style)
+        person_excel_id += 1
 
     wb.save(response)
 
