@@ -6,7 +6,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <h2>Czy na pewno chcesz usunąć?</h2>
-        <button type="submit">Usuń</button>
+        <br>
+        <button type="submit" class="btn btn-secondary">Usuń</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
     </form>
-    <a href="{% url 'main' %}" class="btn" >Powrót</a>
 {% endblock %}

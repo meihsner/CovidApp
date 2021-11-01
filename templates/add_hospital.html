@@ -4,15 +4,31 @@
 {% block title %} Dodaj szpital {% endblock %}
 
 {% block page %}
-    <h2>Ostatnio dodany szpital:</h2>
-    {% for hospital in hospitals %}
-        {{ hospital.name }} --- {{ hospital.address }} --- {{ hospital.city }} <br>
-    {% endfor %}
+    <h2>Ostatnio dodane szpitale:</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nazwa</th>
+          <th scope="col">Adres</th>
+          <th scope="col">Miasto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for hospital in hospitals %}
+        <tr>
+          <td>{{ hospital.name}}</td>
+          <td>{{ hospital.address }}</td>
+          <td>{{ hospital.city }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
     <br>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form_hospital|bootstrap }}
-        <button type="submit">Dodaj</button>
+        <br>
+        <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
     </form>
-    <a href="{% url 'main' %}" class="btn" >Powrót</a>
 {% endblock %}

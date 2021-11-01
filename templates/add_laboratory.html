@@ -4,15 +4,30 @@
 {% block title %} Dodaj osobę {% endblock %}
 
 {% block page %}
-    <h2>Ostatnio dodane laboratorium:</h2>
-    {% for laboratory in laboratories %}
-        {{ laboratory.name }} --- {{ laboratory.address }} --- {{ laboratory.city }} <br>
-    {% endfor %}
+    <h2>Ostatnio dodane laboratoria:</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nazwa</th>
+          <th scope="col">Adres</th>
+          <th scope="col">Miasto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for laboratory in laboratories %}
+        <tr>
+          <td>{{ laboratory.name}}</td>
+          <td>{{ laboratory.address }}</td>
+          <td>{{ laboratory.city }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     <br>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form_laboratory|bootstrap }}
-        <button type="submit">Dodaj</button>
+        <br>
+        <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
     </form>
-    <a href="{% url 'main' %}" class="btn" >Powrót</a>
 {% endblock %}

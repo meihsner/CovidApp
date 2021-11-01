@@ -53,6 +53,7 @@ class Person(models.Model):
     surname = models.CharField(max_length=32)
     gender = models.PositiveSmallIntegerField(choices=GENDER)
     age = models.PositiveSmallIntegerField()
+    address = models.CharField(max_length=60)
     city = models.ForeignKey(City, on_delete=models.PROTECT, related_name='city')
     telephone_number = PhoneNumberField()
 

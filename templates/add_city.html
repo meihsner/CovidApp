@@ -5,14 +5,30 @@
 
 {% block page %}
     <h2>Ostatnio dodane miasta:</h2>
-    {% for city in cities %}
-        {{ city.name }} --- {{ city.county }} --- {{ city.province }} <br>
-    {% endfor %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nazwa</th>
+          <th scope="col">Powiat</th>
+          <th scope="col">Województwo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for city in cities %}
+        <tr>
+          <td>{{ city.name}}</td>
+          <td>{{ city.county }}</td>
+          <td>{{ city.province }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
     <br>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form_city|bootstrap }}
-        <button type="submit">Dodaj</button>
-    </form>
-    <a href="{% url 'main' %}" class="btn" >Powrót</a>
+        <br>
+        <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+    </form
 {% endblock %}

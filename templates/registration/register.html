@@ -9,9 +9,9 @@
             {{ form_new_user.as_table }}
             <tr>
                 <td><input type="hidden" name="next" value="{{ next }}"></td>
-                <td><button type="submit" class="btn btn-primary">Zarejestruj</button></td>
+                <td><button type="submit" class="btn btn-secondary">Zarejestruj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a></td>
+                <br>
             </tr>
         </table>
     </form>
-    <a href="{% url 'main' %}" class="btn" >Powrót</a>
 {% endblock %}

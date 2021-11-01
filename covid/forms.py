@@ -5,7 +5,7 @@ from .models import Person, City, Laboratory, Hospital
 class PersonForm(ModelForm):
     class Meta:
         model = Person
-        fields = ['name', 'surname', 'gender', 'age', 'city', 'telephone_number', 'date_of_received_information',
+        fields = ['name', 'surname', 'gender', 'age', 'address', 'city', 'telephone_number', 'date_of_received_information',
                   'date_of_positive_result', 'laboratory_performing_tests', 'whereabouts', 'source_of_infection',
                   'hospitalization', 'hospital', 'supervision', 'quarantine']
 

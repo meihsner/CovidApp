@@ -7,8 +7,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form_person|bootstrap }}
-        <button type="submit">Dodaj</button>
+        <br>
+        <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
     </form>
-
-    <a href="{% url 'main' %}" class="btn" >Powrót</a>
 {% endblock %}

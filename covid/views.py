@@ -184,7 +184,7 @@ def export_data_xls(request):
 
     return response
 
-
+@login_required
 def export_notification_docx(request, id):
     person = get_object_or_404(Person, pk=id)
     current_date = datetime.now().date()
@@ -192,16 +192,16 @@ def export_notification_docx(request, id):
     document = Document('zawiadomienie.docx')
     paragraphs = document.paragraphs
     paragraphs[2]._p.clear()
-    paragraphs[2].add_run('{} \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tGliwice, {}r.'.format(person.telephone_number,
-                                                                                          current_date))
+    paragraphs[2].add_run('{} \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tGliwice, {}r.'.format(person.telephone_number, current_date))
     paragraphs[5]._p.clear()
-    paragraphs[5].add_run('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{} {}'.format(person.name, person.surname))
+    paragraphs[5].add_run('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{} {}'.format(person.name, person.surname))
     paragraphs[6]._p.clear()
-    paragraphs[6].add_run('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{}'.format(person.city))
+    paragraphs[6].add_run('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{}'.format(person.city))
+    paragraphs[7]._p.clear()
+    paragraphs[7].add_run('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{}'.format(person.address))
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-    response['Content-Disposition'] = 'attachment; filename=' + '{}_{}_zawiadomienie.docx'.format(person.name,
-                                                                                                  person.surname)
+    response['Content-Disposition'] = 'attachment; filename={}_{}_zawiadomienie.docx'.format(person.name, person.surname)
 
     document.save(response)
 
