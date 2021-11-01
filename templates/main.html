@@ -52,7 +52,7 @@
           <td>{{ person.surname }}</td>
           <td>{{ person.age }}</td>
           <td>{{ person.city }}</td>
-          <td><a href="{% url 'edit_person' person.id %}" class="btn btn-secondary"><i class="fas fa-user-pen"></i></a> <a href="{% url 'delete_person' person.id %}" class="btn btn-secondary"><i class="fas fa-user-minus"></i></a> <button type="button" class="btn btn-secondary"><i class="fas fa-envelope-open-text"></i></button></li></td>
+          <td><a href="{% url 'edit_person' person.id %}" class="btn btn-secondary"><i class="fas fa-user-pen"></i></a> <a href="{% url 'delete_person' person.id %}" class="btn btn-secondary"><i class="fas fa-user-minus"></i></a> <a href="{% url 'export_docx' person.id %}"  class="btn btn-secondary"><i class="fas fa-envelope-open-text"></i></a></li></td>
         </tr>
         {% endfor %}
       </tbody>

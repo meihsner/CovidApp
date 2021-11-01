@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 import xlwt
 from django.http import HttpResponse
 from datetime import datetime
+from docx import *
 
 
 @staff_member_required
@@ -101,7 +102,7 @@ def add_city(request):
 
 
 @login_required
-def export_users_xls(request):
+def export_data_xls(request):
     current_date = datetime.now().date()
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="PSSE {}.xls"'.format(current_date)
@@ -180,5 +181,28 @@ def export_users_xls(request):
         person_excel_id += 1
 
     wb.save(response)
+
+    return response
+
+
+def export_notification_docx(request, id):
+    person = get_object_or_404(Person, pk=id)
+    current_date = datetime.now().date()
+
+    document = Document('zawiadomienie.docx')
+    paragraphs = document.paragraphs
+    paragraphs[2]._p.clear()
+    paragraphs[2].add_run('{} \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tGliwice, {}r.'.format(person.telephone_number,
+                                                                                          current_date))
+    paragraphs[5]._p.clear()
+    paragraphs[5].add_run('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{} {}'.format(person.name, person.surname))
+    paragraphs[6]._p.clear()
+    paragraphs[6].add_run('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{}'.format(person.city))
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachment; filename=' + '{}_{}_zawiadomienie.docx'.format(person.name,
+                                                                                                  person.surname)
+
+    document.save(response)
 
     return response

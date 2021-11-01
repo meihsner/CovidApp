@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import main, add_person, add_laboratory, add_hospital, edit_person, delete_person, add_city, export_users_xls
+from .views import main, add_person, add_laboratory, add_hospital, edit_person, delete_person, add_city, export_data_xls, export_notification_docx
 
 
 urlpatterns = [
@@ -10,5 +10,6 @@ urlpatterns = [
     path('add_laboratory/', add_laboratory, name='add_laboratory'),
     path('add_hospital/', add_hospital, name='add_hospital'),
     path('add_city/', add_city, name='add_city'),
-    path('excel/', export_users_xls, name='export_excel'),
+    path('excel/', export_data_xls, name='export_excel'),
+    path('word/<int:id>/', export_notification_docx, name='export_docx'),
 ]
