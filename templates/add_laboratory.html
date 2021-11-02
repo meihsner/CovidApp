@@ -1,33 +1,62 @@
 {% extends 'pattern.html' %}
 {% load bootstrap %}
 
-{% block title %} Dodaj osobę {% endblock %}
+{% block title %} Dodaj laboratoirum {% endblock %}
 
 {% block page %}
-    <h2>Ostatnio dodane laboratoria:</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Nazwa</th>
-          <th scope="col">Adres</th>
-          <th scope="col">Miasto</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for laboratory in laboratories %}
-        <tr>
-          <td>{{ laboratory.name}}</td>
-          <td>{{ laboratory.address }}</td>
-          <td>{{ laboratory.city }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <br>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form_laboratory|bootstrap }}
-        <br>
-        <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
-    </form>
+    <div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
+      <div class="card-header">
+          <h2 class="display-4">Dodaj laboratorium!</h2>
+        </div>
+        <div class="card-body">
+
+          <img src="/images/laboratorium.jpg" class="city_image"width=1840 height=400>
+          <br>
+          <br>
+
+        <div class="row">
+          <div class="col-6">
+            <h3>Formularz:</h3>
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form_laboratory|bootstrap }}
+              <br>
+            </form>
+          </div>
+          <div class="col-6">
+            <h3>Ostatnio dodane laboratoria:</h3>
+            <br>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Nazwa</th>
+                  <th scope="col">Adres</th>
+                  <th scope="col">Miasto</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for laboratory in laboratories %}
+                <tr>
+                  <td>{{ laboratory.name}}</td>
+                  <td>{{ laboratory.address }}</td>
+                  <td>{{ laboratory.city }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+       <div class="row">
+           <div class="col-2">
+            <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+           </div>
+           <div class="col-10"></div>
+            </div>
+            <br>
+      <div class="card-footer text-muted">
+        Jest {% now "j E Y" %}, godzina {% now "H:i" %}
+      </div>
+    </div>
+    </div>
+
 {% endblock %}

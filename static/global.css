@@ -1,3 +1,23 @@
 body {
-    padding: 2em;
+    padding: 1em;
+}
+
+.scroll_table {
+  height:640px;
+  display:block;
+  overflow-y:scroll;
+  width:100%;
+}
+
+td {
+  width: 10%;
+}
+
+.site{
+  overflow: scroll;
+}
+
+.city_image{
+    width=1900px;
+    height=140px;
 }

@@ -3,6 +3,8 @@ from django.urls import path
 from django.conf.urls import include
 from django.contrib.auth import views as auth_views
 from covid.views import user_registration
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
@@ -11,4 +13,4 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', user_registration, name='register'),
     path('covid/', include('covid.urls'))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

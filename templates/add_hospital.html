@@ -4,31 +4,58 @@
 {% block title %} Dodaj szpital {% endblock %}
 
 {% block page %}
-    <h2>Ostatnio dodane szpitale:</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Nazwa</th>
-          <th scope="col">Adres</th>
-          <th scope="col">Miasto</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for hospital in hospitals %}
-        <tr>
-          <td>{{ hospital.name}}</td>
-          <td>{{ hospital.address }}</td>
-          <td>{{ hospital.city }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
+      <div class="card-header">
+          <h2 class="display-4">Dodaj szpital!</h2>
+        </div>
+        <div class="card-body">
 
-    <br>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form_hospital|bootstrap }}
-        <br>
-        <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
-    </form>
+            <img src="/images/szpital.jpg" class="city_image"width=1840 height=400>
+            <br>
+            <br>
+
+      <div class="row">
+        <div class="col-6">
+            <h3>Formularz:</h3>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form_hospital|bootstrap }}
+                <br>
+            </form>
+        </div>
+        <div class="col-6">
+            <h3>Ostatnio dodane szpitale:</h3>
+            <br>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Nazwa</th>
+                  <th scope="col">Adres</th>
+                  <th scope="col">Miasto</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for hospital in hospitals %}
+                <tr>
+                  <td>{{ hospital.name}}</td>
+                  <td>{{ hospital.address }}</td>
+                  <td>{{ hospital.city }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+      </div>
+            <div class="row">
+           <div class="col-2">
+            <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+           </div>
+           <div class="col-10"></div>
+            </div>
+            <br>
+      <div class="card-footer text-muted">
+        Jest {% now "j E Y" %}, godzina {% now "H:i" %}
+      </div>
+    </div>
+
 {% endblock %}

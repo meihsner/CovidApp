@@ -68,6 +68,8 @@ class Person(models.Model):
     supervision = models.PositiveSmallIntegerField(choices=BINARY, default=0)
     quarantine = models.PositiveSmallIntegerField(choices=BINARY, default=0)
 
+    who_added = models.CharField(max_length=32, default="None")
+
     def __str__(self):
         return self.name_surname_age()
 

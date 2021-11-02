@@ -27,6 +27,6 @@ class HospitalAdmin(admin.ModelAdmin):
 class PersonAdmin(admin.ModelAdmin):
     fields = ['name', 'surname', 'gender', 'age', 'address', 'city', 'telephone_number', 'date_of_received_information',
               'date_of_positive_result', 'laboratory_performing_tests', 'whereabouts', 'source_of_infection',
-              'hospitalization', 'hospital', 'supervision', 'quarantine']
+              'hospitalization', 'hospital', 'supervision', 'quarantine', 'who_added']
     list_filter = ['gender', 'city', 'laboratory_performing_tests']
     search_fields = ['name', 'surname']

@@ -25,7 +25,7 @@ def user_registration(request):
 @login_required
 def main(request):
     try:
-            people = Person.objects.filter(surname__icontains=request.GET.get('search'))
+        people = Person.objects.filter(surname__icontains=request.GET.get('search'))
     except ValueError:
         people = Person.objects.all()
     return render(request, 'main.html', {'people': people})
@@ -33,7 +33,7 @@ def main(request):
 
 @login_required
 def add_person(request):
-    form_person = PersonForm(request.POST or None)
+    form_person = PersonForm(request.POST or None, initial={'who_added': request.user.username, 'telephone_number': '+48'})
     if form_person.is_valid():
         form_person.save()
         return redirect(main)
@@ -61,10 +61,10 @@ def delete_person(request, id):
 
 @login_required
 def add_laboratory(request):
-    if Laboratory.objects.count() <= 5:
+    if Laboratory.objects.count() <= 2:
         laboratories = Laboratory.objects.order_by('-id')
     else:
-        laboratories = Laboratory.objects.order_by('-id')[0:6]
+        laboratories = Laboratory.objects.order_by('-id')[0:3]
 
     form_laboratory = LaboratoryForm(request.POST or None)
     if form_laboratory.is_valid():
@@ -75,10 +75,10 @@ def add_laboratory(request):
 
 @login_required
 def add_hospital(request):
-    if Hospital.objects.count() <= 5:
+    if Hospital.objects.count() <= 2:
         hospitals = Hospital.objects.order_by('-id')
     else:
-        hospitals = Hospital.objects.order_by('-id')[0:6]
+        hospitals = Hospital.objects.order_by('-id')[0:3]
 
     form_hospital = HospitalForm(request.POST or None)
     if form_hospital.is_valid():
@@ -89,10 +89,10 @@ def add_hospital(request):
 
 @login_required
 def add_city(request):
-    if City.objects.count() <= 5:
+    if City.objects.count() <= 2:
         cities = City.objects.order_by('-id')
     else:
-        cities = City.objects.order_by('-id')[0:6]
+        cities = City.objects.order_by('-id')[0:3]
 
     form_city = CityForm(request.POST or None)
     if form_city.is_valid():

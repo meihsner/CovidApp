@@ -1,42 +1,54 @@
 {% extends 'pattern.html' %}
 
-{% block title %} Main page {% endblock %}
+{% block title %} Strona główna {% endblock %}
 
 {% block page %}
-<div class="card text-center">
+
+<div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
   <div class="card-header">
     {% if user.is_authenticated %}
       <h2 class="display-4">Witaj {{ user.username }}!</h2>
     {% endif %}
   </div>
   <div class="card-body">
-    <div class="dropdown">
-      {% if perms.covid %}
-      <a href="{% url 'register' %}" class="btn btn-secondary">Zarejestruj użytkownika </a>  <a href="{% url 'add_person' %}" class="btn btn-secondary">Dodaj osobę</a> <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> Dodaj miejsce </a> <a href="{% url 'export_excel' %}" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></a>   <a href="{% url 'logout' %}" class="btn btn-secondary">Wyloguj</a>
-      {% else %}
-      <a href="{% url 'add_person' %}" class="btn btn-secondary">Dodaj osobę</a> <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> Dodaj miejsce </a> <a href="{% url 'export_excel' %}" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></a>   <a href="{% url 'logout' %}" class="btn btn-secondary">Wyloguj</a>
-      {% endif %}
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <li><a class="dropdown-item" href="{% url 'add_city' %}">Miasto</a></li>
-        <li><a class="dropdown-item" href="{% url 'add_laboratory' %}">Laboratorium</a></li>
-        <li><a class="dropdown-item" href="{% url 'add_hospital' %}">Szpital</a></li>
-      </ul>
+
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <div class="dropdown">
+          {% if perms.covid %}
+          <a href="{% url 'register' %}" class="btn btn-secondary">Zarejestruj użytkownika </a>  <a href="{% url 'add_person' %}" class="btn btn-secondary">Dodaj osobę</a> <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> Dodaj miejsce </a> <a href="{% url 'export_excel' %}" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></a>   <a href="{% url 'logout' %}" class="btn btn-secondary">Wyloguj</a>
+          {% else %}
+          <a href="{% url 'add_person' %}" class="btn btn-secondary">Dodaj osobę</a> <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> Dodaj miejsce </a> <a href="{% url 'export_excel' %}" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></a>   <a href="{% url 'logout' %}" class="btn btn-secondary">Wyloguj</a>
+          {% endif %}
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'add_city' %}">Miasto</a></li>
+            <li><a class="dropdown-item" href="{% url 'add_laboratory' %}">Laboratorium</a></li>
+            <li><a class="dropdown-item" href="{% url 'add_hospital' %}">Szpital</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+    <br>
+    <br>
+
+    <div class="row">
+      <div class="col-4">
+        <h4>Lista osób aktualnie widniejących w bazie danych: {{ people|length }}</h4>
+      </div>
+      <div class="col-6">
+      </div>
+      <div class="col-2">
+        <form action="">
+          <input type="text" name="search" placeholder="Wyszukaj po nazwisku..." value="{{request.GET.name}}">
+          <input type="submit" value="Szukaj" >
+        </form>
+      </div>
     </div>
 
-    <br>
-    <br>
-
-    <h2>Lista osób aktualnie widniejących w bazie danych: {{ people|length }}</h2>
-
-    <form action="">
-      <input type="text" name="search" placeholder="Wyszukaj po nazwisku..." value="{{request.GET.name}}">
-      <input type="submit" value="Szukaj">
-    </form>
-
-    <table class="table">
+    <table class="table table-bordered table-striped scroll_table">
       <thead>
         <tr>
-          <th scope="col">id</th>
           <th scope="col">Imię</th>
           <th scope="col">Nazwisko</th>
           <th scope="col">Wiek</th>
@@ -44,13 +56,13 @@
           <th scope="col">Kwarantanna</th>
           <th scope="col">Hospitalizacja</th>
           <th scope="col">Nadzór</th>
+          <th scope="col">Dodał</th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         {% for person in people %}
         <tr>
-          <td>{{ person.id }}</td>
           <td>{{ person.name }}</td>
           <td>{{ person.surname }}</td>
           <td>{{ person.age }}</td>
@@ -58,15 +70,17 @@
           <td>{{ person.get_quarantine_display }}</td>
           <td>{{ person.get_hospitalization_display }}</td>
           <td>{{ person.get_supervision_display }}</td>
-          <td><a href="{% url 'edit_person' person.id %}" class="btn btn-secondary"><i class="fas fa-user-pen"></i></a> <a href="{% url 'delete_person' person.id %}" class="btn btn-secondary"><i class="fas fa-user-minus"></i></a> <a href="{% url 'export_docx' person.id %}"  class="btn btn-secondary"><i class="fas fa-envelope-open-text"></i></a></li></td>
+          <td>{{ person.who_added }}</td>
+
+          <td><a href="{% url 'edit_person' person.id %}" class="btn btn-secondary" data-toggle="tooltip" title="Edytuj osobę"><i class="fas fa-user-pen"></i></a> <a href="{% url 'delete_person' person.id %}" class="btn btn-secondary" data-toggle="tooltip" title="Usuń osobę"><i class="fas fa-user-minus"></i></a> <a href="{% url 'export_docx' person.id %}"  class="btn btn-secondary" data-toggle="tooltip" title="Generuj zawiadomienie"><i class="fas fa-envelope-open-text"></i></a></li></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-    <br>
+
   </div>
   <div class="card-footer text-muted">
-    {% now "jS F Y H:i" %}
+    Jest {% now "j E Y" %}, godzina {% now "H:i" %}
   </div>
 </div>
 
