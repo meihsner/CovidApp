@@ -2,21 +2,13 @@
 
 {% block title %} Potwierdź usunięcie {% endblock %}
 
-{% block page %}
-    <div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
-      <div class="card-header">
-          <h2 class="display-4">Czy na pewno chcesz usunąć?</h2>
-        </div>
-        <div class="card-body">
+{% block card_head %}
+    <h2 class="display-4">Czy na pewno chcesz usunąć?</h2>
+{% endblock %}
 
+{% block card_body %}
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <button type="submit" class="btn btn-secondary">Usuń</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
         </form>
-        </div>
-      <div class="card-footer text-muted">
-        Jest {% now "j E Y" %}, godzina {% now "H:i" %}
-      </div>
-    </div>
-
 {% endblock %}

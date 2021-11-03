@@ -14,16 +14,19 @@ class PersonForm(ModelForm):
 class CityForm(ModelForm):
     class Meta:
         model = City
-        fields = ['name', 'county', 'province']
+        fields = '__all__'
+        # fields = ['name', 'county', 'province']
 
 
 class LaboratoryForm(ModelForm):
     class Meta:
         model = Laboratory
-        fields = ['name', 'address', 'city']
+        fields = '__all__'
+        # fields = ['name', 'address', 'city']
 
 
 class HospitalForm(ModelForm):
     class Meta:
         model = Hospital
-        fields = ['name', 'address', 'city']
+        fields = '__all__'
+        # fields = ['name', 'address', 'city']

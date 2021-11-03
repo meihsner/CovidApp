@@ -40,9 +40,9 @@ class Hospital(models.Model):
 
 class Person(models.Model):
     GENDER = {
-        (1, 'M'),
-        (2, 'K'),
-        (3, 'other')
+        (1, 'Mężczyzna'),
+        (2, 'Kobieta'),
+        (3, 'inna')
     }
     BINARY = {
         (0, 'Nie'),

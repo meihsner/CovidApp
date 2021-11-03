@@ -3,11 +3,24 @@
 
 {% block title %} Login {% endblock %}
 
-{% block page %}
+{% block card_head %}
+    <h2 class="display-4">Zaloguj się do aplikacji!</h2>
+{% endblock %}
+
+{% block card_body %}
     <form method="POST">
         {% csrf_token %}
-        {{ form|bootstrap }}
-        <button type="submit">Zaloguj</button>
+<!--        {{ form|bootstrap }}-->
+        <div class="fieldWrapper">
+            <label class="add_label">Nazwa użytkownika:</label>
+            {{ form.username }}
+        </div>
+        <div class="form_gap"></div>
+        <div class="fieldWrapper">
+            <label class="add_label">Hasło:</label>
+            {{ form.password }}
+        </div>
+        <br>
+        <button type="submit" class="btn btn-secondary">Zaloguj</button>
     </form>
-
 {% endblock %}

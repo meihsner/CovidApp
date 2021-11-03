@@ -2,16 +2,13 @@
 
 {% block title %} Strona główna {% endblock %}
 
-{% block page %}
-
-<div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
-  <div class="card-header">
+{% block card_head %}
     {% if user.is_authenticated %}
       <h2 class="display-4">Witaj {{ user.username }}!</h2>
     {% endif %}
-  </div>
-  <div class="card-body">
+{% endblock %}
 
+{% block card_body %}
     <ul class="nav nav-pills">
       <li class="nav-item">
         <div class="dropdown">
@@ -77,11 +74,4 @@
         {% endfor %}
       </tbody>
     </table>
-
-  </div>
-  <div class="card-footer text-muted">
-    Jest {% now "j E Y" %}, godzina {% now "H:i" %}
-  </div>
-</div>
-
 {% endblock %}

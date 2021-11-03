@@ -3,60 +3,65 @@
 
 {% block title %} Dodaj miasto {% endblock %}
 
-{% block page %}
-    <div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
-      <div class="card-header">
-          <h2 class="display-4">Dodaj miasto!</h2>
-        </div>
-        <div class="card-body">
+{% block card_head %}
+    <h2 class="display-4">Dodaj miasto!</h2>
+{% endblock %}
 
-            <img src="/images/city.jpe" class="city_image"width=1840 height=400>
-            <br>
-            <br>
+{% block card_body %}
+    <img src="/images/city.jpe" class="city_image"width=1840 height=400>
+    <br>
+    <br>
 
-       <div class="row">
-           <div class="col-6">
-               <h3>Formularz:</h3>
-
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form_city|bootstrap }}
-                <br>
-            </form>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                <h3>Formularz:</h3>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Nazwa:</label>
+                        {{ form_city.name|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Powiat:</label>
+                        {{ form_city.county|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Województwo:</label>
+                        {{ form_city.province|bootstrap_inline }}
+                    </div>
+                    <br>
             </div>
-           <div class="col-6">
-               <h3>Ostatnio dodane miasta:</h3>
-               <br>
-                <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">Nazwa</th>
-                      <th scope="col">Powiat</th>
-                      <th scope="col">Województwo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for city in cities %}
-                    <tr>
-                      <td>{{ city.name}}</td>
-                      <td>{{ city.county }}</td>
-                      <td>{{ city.province }}</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
+            <div class="col-6">
+                <h3>Ostatnio dodane miasta:</h3>
+                <br>
+                <table class="table table-bordered table-striped scroll_small_table">
+                    <thead>
+                        <tr>
+                          <th scope="col">Nazwa</th>
+                          <th scope="col">Powiat</th>
+                          <th scope="col">Województwo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for city in cities %}
+                        <tr>
+                          <td>{{ city.name}}</td>
+                          <td>{{ city.county }}</td>
+                          <td>{{ city.province }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
-       </div>
-       <div class="row">
-           <div class="col-2">
-            <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
-           </div>
-           <div class="col-10"></div>
-       </div>
-            <br>
-      <div class="card-footer text-muted">
-        Jest {% now "j E Y" %}, godzina {% now "H:i" %}
-      </div>
-    </div>
-
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+            </div>
+            <div class="col-10"></div>
+        </div>
+    </form>
 {% endblock %}
+

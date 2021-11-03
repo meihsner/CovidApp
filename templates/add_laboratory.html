@@ -3,60 +3,65 @@
 
 {% block title %} Dodaj laboratoirum {% endblock %}
 
-{% block page %}
-    <div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
-      <div class="card-header">
-          <h2 class="display-4">Dodaj laboratorium!</h2>
-        </div>
-        <div class="card-body">
+{% block card_head %}
+    <h2 class="display-4">Dodaj laboratorium!</h2>
+{% endblock %}
 
-          <img src="/images/laboratorium.jpg" class="city_image"width=1840 height=400>
-          <br>
-          <br>
+{% block card_body %}
+    <img src="/images/laboratorium.jpg" class="city_image"width=1840 height=400>
+    <br>
+    <br>
 
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="row">
-          <div class="col-6">
-            <h3>Formularz:</h3>
-            <form method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ form_laboratory|bootstrap }}
-              <br>
-            </form>
-          </div>
-          <div class="col-6">
-            <h3>Ostatnio dodane laboratoria:</h3>
-            <br>
-            <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Nazwa</th>
-                  <th scope="col">Adres</th>
-                  <th scope="col">Miasto</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for laboratory in laboratories %}
-                <tr>
-                  <td>{{ laboratory.name}}</td>
-                  <td>{{ laboratory.address }}</td>
-                  <td>{{ laboratory.city }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-       <div class="row">
-           <div class="col-2">
-            <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
-           </div>
-           <div class="col-10"></div>
+            <div class="col-6">
+                <h3>Formularz:</h3>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Nazwa:</label>
+                        {{ form_laboratory.name|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Adres:</label>
+                        {{ form_laboratory.address|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Miasto:</label>
+                        {{ form_laboratory.city|bootstrap_inline }}
+                    </div>
+                  <br>
             </div>
-            <br>
-      <div class="card-footer text-muted">
-        Jest {% now "j E Y" %}, godzina {% now "H:i" %}
-      </div>
-    </div>
-    </div>
-
+            <div class="col-6">
+                <h3>Ostatnio dodane laboratoria:</h3>
+                <br>
+                <table class="table table-bordered table-striped scroll_small_table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Nazwa</th>
+                        <th scope="col">Adres</th>
+                        <th scope="col">Miasto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for laboratory in laboratories %}
+                        <tr>
+                        <td>{{ laboratory.name}}</td>
+                        <td>{{ laboratory.address }}</td>
+                        <td>{{ laboratory.city }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+            </div>
+            <div class="col-10"></div>
+        </div>
+    </form>
 {% endblock %}

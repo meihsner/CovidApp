@@ -3,22 +3,113 @@
 
 {% block title %} Dodaj osobę {% endblock %}
 
-{% block page %}
-    <div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
-      <div class="card-header">
-          <h2 class="display-4">Dodaj osobę!</h2>
-        </div>
-        <div class="card-body">
+{% block card_head %}
+    {% if edit %}
+        <h2 class="display-4">Edytuj osobę!</h2>
+    {% else %}
+        <h2 class="display-4">Dodaj osobę!</h2>
+    {% endif %}
+{% endblock %}
 
+{% block card_body %}
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form_person|bootstrap }}
+            <div class="row">
+                <div class="col-6">
+                    <div class="fieldWrapper">
+                        <label class="add_label">Imię:</label>
+                        {{ form_person.name|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Nazwisko:</label>
+                        {{ form_person.surname|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Płeć:</label>
+                        {{ form_person.gender|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Wiek:</label>
+                        {{ form_person.age|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Adres:</label>
+                        {{ form_person.address|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Miejscowość zamieszkania chorego:</label>
+                        {{ form_person.city|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Numer telefonu:</label>
+                        {{ form_person.telephone_number|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Data pozyskania informacji przez PSSE:</label>
+                        {{ form_person.date_of_received_information|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Data otrzymania pozytywnego wyniku:</label>
+                        {{ form_person.date_of_positive_result|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Laboratorium wykonujące badanie:</label>
+                        {{ form_person.laboratory_performing_tests|bootstrap_inline }}
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="fieldWrapper">
+                        <label class="add_label">Miejscowość pobytu chorego:</label>
+                        {{ form_person.whereabouts|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Źródło zakażenia:</label>
+                        {{ form_person.source_of_infection|bootstrap_inline }}
+                    </div>
+                    <div class="larger_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Hospitalizowany:</label>
+                        {{ form_person.hospitalization|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Nazwa szpitala:</label>
+                        {{ form_person.hospital|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Objęty nadzorem:</label>
+                        {{ form_person.supervision|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Poddany kwarantannie:</label>
+                        {{ form_person.quarantine|bootstrap_inline }}
+                    </div>
+                    <div class="form_gap"></div>
+                    <div class="fieldWrapper">
+                        <label class="add_label">Użytkownik wprowadzający osobę:</label>
+                        {{ form_person.who_added|bootstrap_inline }}
+                    </div>
+                </div>
+            </div>
+
             <br>
-            <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+            {% if edit %}
+                <button type="submit" class="btn btn-secondary">Edytuj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+            {% else %}
+                <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+            {% endif %}
         </form>
-        </div>
-      <div class="card-footer text-muted">
-        Jest {% now "j E Y" %}, godzina {% now "H:i" %}
-      </div>
-    </div>
 {% endblock %}

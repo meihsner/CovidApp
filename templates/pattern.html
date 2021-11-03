@@ -17,6 +17,16 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    {% block page %} {% endblock %}
+    <div class="card text-center bg-success p-2 text-black" style="--bs-bg-opacity: .25;">
+        <div class="card-header">
+            {% block card_head %} {% endblock %}
+        </div>
+        <div class="card-body">
+            {% block card_body %} {% endblock %}
+        </div>
+        <div class="card-footer text-muted">
+            Jest {% now "j E Y" %}, godzina {% now "H:i" %}
+        </div>
+    </div>
 </body>
 </html>

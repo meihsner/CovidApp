@@ -37,7 +37,7 @@ def add_person(request):
     if form_person.is_valid():
         form_person.save()
         return redirect(main)
-    return render(request, 'add_person.html', {'form_person': form_person})
+    return render(request, 'add_person.html', {'form_person': form_person, 'edit': False})
 
 
 @login_required
@@ -47,7 +47,7 @@ def edit_person(request, id):
     if form_person.is_valid():
         form_person.save()
         return redirect(main)
-    return render(request, 'edit_person.html', {'form_person': form_person})
+    return render(request, 'add_person.html', {'form_person': form_person, 'edit': True})
 
 
 @login_required
@@ -61,10 +61,10 @@ def delete_person(request, id):
 
 @login_required
 def add_laboratory(request):
-    if Laboratory.objects.count() <= 2:
+    if Laboratory.objects.count() <= 5:
         laboratories = Laboratory.objects.order_by('-id')
     else:
-        laboratories = Laboratory.objects.order_by('-id')[0:3]
+        laboratories = Laboratory.objects.order_by('-id')[0:6]
 
     form_laboratory = LaboratoryForm(request.POST or None)
     if form_laboratory.is_valid():
@@ -75,10 +75,10 @@ def add_laboratory(request):
 
 @login_required
 def add_hospital(request):
-    if Hospital.objects.count() <= 2:
+    if Hospital.objects.count() <= 5:
         hospitals = Hospital.objects.order_by('-id')
     else:
-        hospitals = Hospital.objects.order_by('-id')[0:3]
+        hospitals = Hospital.objects.order_by('-id')[0:6]
 
     form_hospital = HospitalForm(request.POST or None)
     if form_hospital.is_valid():
@@ -89,15 +89,15 @@ def add_hospital(request):
 
 @login_required
 def add_city(request):
-    if City.objects.count() <= 2:
+    if City.objects.count() <= 5:
         cities = City.objects.order_by('-id')
     else:
-        cities = City.objects.order_by('-id')[0:3]
+        cities = City.objects.order_by('-id')[0:6]
 
     form_city = CityForm(request.POST or None)
     if form_city.is_valid():
         form_city.save()
-        return redirect(add_city)
+        return redirect(main)
     return render(request, 'add_city.html', {'form_city': form_city, 'cities': cities})
 
 
