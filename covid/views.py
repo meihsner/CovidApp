@@ -2,24 +2,43 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Person, City, Hospital, Laboratory
-from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm
-from django.contrib.auth.forms import UserCreationForm
+from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm, NewUserCreationForm
 import xlwt
 from django.http import HttpResponse
 from datetime import datetime
 from docx import *
+from django.contrib.auth.models import User
 
 
 @staff_member_required
 def user_registration(request):
     if request.method == 'POST':
-        new_user = UserCreationForm(request.POST)
-        if new_user.is_valid():
-            new_user.save()
-            return redirect('main')
+        form_user = NewUserCreationForm(request.POST)
+        if form_user.is_valid():
+            form_user.save()
+            return redirect(administration_panel)
     else:
-        new_user = UserCreationForm()
-    return render(request, 'registration/register.html', {'form_new_user': new_user})
+        form_user = NewUserCreationForm()
+    return render(request, 'registration/register.html', {'form_user': form_user, 'edit': False})
+
+
+@staff_member_required
+def edit_user(request, id):
+    user = get_object_or_404(User, pk=id)
+    form_user = NewUserCreationForm(request.POST or None, instance=user)
+    if form_user.is_valid():
+        form_user.save()
+        return redirect(main)
+    return render(request, 'registration/register.html', {'form_user': form_user, 'edit': True})
+
+
+@staff_member_required
+def administration_panel(request):
+    try:
+        users = User.objects.filter(username__icontains=request.GET.get('search'))
+    except ValueError:
+        users = User.objects.all()
+    return render(request, 'administration_panel.html', {'users': users})
 
 
 @login_required

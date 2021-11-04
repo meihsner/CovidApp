@@ -4,30 +4,53 @@
 {% block title %} Rejestracja {% endblock %}
 
 {% block card_head %}
-      <h2 class="display-4">Zarejestruj nowego użytkownika!</h2>
+    {% if edit %}
+        <h2 class="display-4">Edytuj użytkownika!</h2>
+    {% else %}
+        <h2 class="display-4">Zarejestruj nowego użytkownika!</h2>
+    {% endif %}
 {% endblock %}
 
 {% block card_body%}
     <form method="post">
         {% csrf_token %}
-<!--        {{ form_new_user }}-->
         <div class="fieldWrapper">
             <label class="add_label">Nazwa użytkownika:</label>
-            {{ form_new_user.username|bootstrap_inline }}
+            {{ form_user.username|bootstrap_inline }}
+        </div>
+        <div class="form_gap"></div>
+        <div class="fieldWrapper">
+            <label class="add_label">Email:</label>
+            {{ form_user.email|bootstrap_inline }}
+        </div>
+        <div class="form_gap"></div>
+        <div class="fieldWrapper">
+            <label class="add_label">Imię:</label>
+            {{ form_user.first_name|bootstrap_inline }}
+        </div>
+        <div class="form_gap"></div>
+        <div class="fieldWrapper">
+            <label class="add_label">Nazwisko:</label>
+            {{ form_user.last_name|bootstrap_inline }}
         </div>
         <div class="form_gap"></div>
         <div class="fieldWrapper">
             <label class="add_label">Hasło:</label>
-            {{ form_new_user.password1|bootstrap_inline }}
+            {{ form_user.password1|bootstrap_inline }}
         </div>
         <div class="form_gap"></div>
         <div class="fieldWrapper">
             <label class="add_label">Powtórz hasło:</label>
-            {{ form_new_user.password2|bootstrap_inline }}
+            {{ form_user.password2|bootstrap_inline }}
         </div>
+
         <br>
         <input type="hidden" name="next" value="{{ next }}">
-        <button type="submit" class="btn btn-secondary">Zarejestruj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+        {% if edit %}
+            <button type="submit" class="btn btn-secondary">Edytuj</button> <a href="{% url 'administration_panel' %}" class="btn btn-secondary" >Powrót</a>
+        {% else %}
+            <button type="submit" class="btn btn-secondary">Zarejestruj</button> <a href="{% url 'administration_panel' %}" class="btn btn-secondary" >Powrót</a>
+        {% endif %}
 
     </form>
 

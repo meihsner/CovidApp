@@ -1,0 +1,64 @@
+{% extends 'pattern.html' %}
+
+{% block title %} Panel administracyjny {% endblock %}
+
+{% block card_head %}
+    {% if user.is_authenticated %}
+      <h2 class="display-4">Panel administracyjny!</h2>
+    {% endif %}
+{% endblock %}
+
+{% block card_body %}
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a href="{% url 'register' %}" class="btn btn-secondary">Zarejestruj użytkownika </a> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+    </li>
+  </ul>
+  <br>
+  <br>
+
+  <div class="row">
+    <div class="col-2">
+      <h4>Liczba użytkowników: {{ users|length }}</h4>
+    </div>
+    <div class="col-8">
+    </div>
+    <div class="col-2">
+      <form action="">
+        <input type="text" name="search" placeholder="Wyszukaj po nazwie..." value="{{request.GET.username}}">
+        <input type="submit" value="Szukaj" >
+      </form>
+    </div>
+  </div>
+
+
+  <table class="table table-bordered table-striped scroll_table">
+    <thead>
+      <tr>
+        <th scope="col">Nazwa użytkownika</th>
+        <th scope="col">Imię</th>
+        <th scope="col">Nazwisko</th>
+        <th scope="col">Email</th>
+        <th scope="col">Ostatnio zalogowany</th>
+        <th scope="col">Aktywny</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.last_login }}</td>
+      <td>{{ user.is_active }}</td>
+
+      <td><a href="{% url 'edit_user' user.id %}" class="btn btn-secondary" data-toggle="tooltip" title="Edytuj użytkownika"><i class="fas fa-user-pen"></i></a> <a href="" class="btn btn-secondary" data-toggle="tooltip" title="Usuń użytkownika"><i class="fas fa-user-minus"></i></a> <a href="" class="btn btn-secondary" data-toggle="tooltip" title="Zmień aktywność użytkownika"><i class="fa-solid fa-flag"></i></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
