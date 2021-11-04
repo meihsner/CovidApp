@@ -3,12 +3,20 @@
 {% block title %} Potwierdź usunięcie {% endblock %}
 
 {% block card_head %}
-    <h2 class="display-4">Czy na pewno chcesz usunąć?</h2>
+    {% if delete_user %}
+        <h2 class="display-4">Czy na pewno chcesz usunąć użytkownika: {{ user.username }}?</h2>
+    {% else %}
+        <h2 class="display-4">Czy na pewno chcesz usunąć osobę: {{ person.name }}?</h2>
+    {% endif %}
 {% endblock %}
 
 {% block card_body %}
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <button type="submit" class="btn btn-secondary">Usuń</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+            {% if delete_user %}
+                <button type="submit" class="btn btn-secondary">Usuń</button> <a href="{% url 'administration_panel' %}" class="btn btn-secondary" >Powrót</a>
+            {% else %}
+                <button type="submit" class="btn btn-secondary">Usuń</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+            {% endif %}
         </form>
 {% endblock %}

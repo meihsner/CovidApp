@@ -1,0 +1,18 @@
+{% extends 'pattern.html' %}
+
+{% block title %} Zmiana aktywności użytkownika {% endblock %}
+
+{% block card_head %}
+    {% if is_active %}
+        <h2 class="display-4">Czy na pewno chcesz dezaktywować użytkownika: {{ user.username }}?</h2>
+    {% else %}
+        <h2 class="display-4">Czy na pewno chcesz aktywować użytkownika: {{ user.username }}?</h2>
+    {% endif %}
+{% endblock %}
+
+{% block card_body %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Potwierdź</button> <a href="{% url 'administration_panel' %}" class="btn btn-secondary" >Powrót</a>
+        </form>
+{% endblock %}

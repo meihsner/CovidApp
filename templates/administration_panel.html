@@ -55,7 +55,7 @@
       <td>{{ user.last_login }}</td>
       <td>{{ user.is_active }}</td>
 
-      <td><a href="{% url 'edit_user' user.id %}" class="btn btn-secondary" data-toggle="tooltip" title="Edytuj użytkownika"><i class="fas fa-user-pen"></i></a> <a href="" class="btn btn-secondary" data-toggle="tooltip" title="Usuń użytkownika"><i class="fas fa-user-minus"></i></a> <a href="" class="btn btn-secondary" data-toggle="tooltip" title="Zmień aktywność użytkownika"><i class="fa-solid fa-flag"></i></a></td>
+      <td><a href="{% url 'edit_user' user.id %}" class="btn btn-secondary" data-toggle="tooltip" title="Edytuj użytkownika"><i class="fas fa-user-pen"></i></a> <a href="{% url 'delete_user' user.id %}" class="btn btn-secondary" data-toggle="tooltip" title="Usuń użytkownika"><i class="fas fa-user-minus"></i></a> <a href="{% url 'activate_deactivate_user' user.id %}" class="btn btn-secondary" data-toggle="tooltip" title="Zmień aktywność użytkownika"><i class="fa-solid fa-flag"></i></a></td>
     </tr>
     {% endfor %}
     </tbody>

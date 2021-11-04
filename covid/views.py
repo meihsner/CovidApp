@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Person, City, Hospital, Laboratory
-from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm, NewUserCreationForm
+from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm, NewUserCreationForm, UpdateUserForm
 import xlwt
 from django.http import HttpResponse
 from datetime import datetime
@@ -25,11 +25,31 @@ def user_registration(request):
 @staff_member_required
 def edit_user(request, id):
     user = get_object_or_404(User, pk=id)
-    form_user = NewUserCreationForm(request.POST or None, instance=user)
+    form_user = UpdateUserForm(request.POST or None, instance=user)
     if form_user.is_valid():
         form_user.save()
-        return redirect(main)
+        return redirect(administration_panel)
     return render(request, 'registration/register.html', {'form_user': form_user, 'edit': True})
+
+
+def delete_user(request, id):
+    user = get_object_or_404(User, pk=id)
+    if request.method == "POST" and id != 1:
+        user.delete()
+        return redirect(administration_panel)
+    return render(request, 'delete_confirm.html', {'user': user, 'delete_user': True})
+
+
+def activate_deactivate_user(request, id):
+    user = get_object_or_404(User, pk=id)
+    if request.method == "POST" and id != 1:
+        if user.is_active:
+            user.is_active = False
+        else:
+            user.is_active = True
+        user.save()
+        return redirect(administration_panel)
+    return render(request, 'activate_deactivate_confirm.html', {'user': user, 'is_active': user.is_active})
 
 
 @staff_member_required
@@ -75,7 +95,7 @@ def delete_person(request, id):
     if request.method == "POST":
         person.delete()
         return redirect(main)
-    return render(request, 'delete_confirm.html', {'person': person})
+    return render(request, 'delete_confirm.html', {'person': person, 'delete_user': False})
 
 
 @login_required

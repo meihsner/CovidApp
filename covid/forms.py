@@ -4,38 +4,43 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.forms.fields import EmailField
-
 
 
 class PersonForm(ModelForm):
     class Meta:
         model = Person
         fields = '__all__'
-        # fields = ['name', 'surname', 'gender', 'age', 'address', 'city', 'telephone_number', 'date_of_received_information',
-        #           'date_of_positive_result', 'laboratory_performing_tests', 'whereabouts', 'source_of_infection',
-        #           'hospitalization', 'hospital', 'supervision', 'quarantine']
 
 
 class CityForm(ModelForm):
     class Meta:
         model = City
         fields = '__all__'
-        # fields = ['name', 'county', 'province']
 
 
 class LaboratoryForm(ModelForm):
     class Meta:
         model = Laboratory
         fields = '__all__'
-        # fields = ['name', 'address', 'city']
 
 
 class HospitalForm(ModelForm):
     class Meta:
         model = Hospital
         fields = '__all__'
-        # fields = ['name', 'address', 'city']
+
+
+class UpdateUserForm(forms.ModelForm):
+    username = forms.CharField(label='username', min_length=5, max_length=32)
+    email = forms.EmailField(label='email', required=False)
+    first_name = forms.CharField(label='first_name', max_length=32)
+    last_name = forms.CharField(label='last_name', max_length=32)
+    password1 = forms.CharField(label='password', widget=forms.PasswordInput, required=False)
+    password2 = forms.CharField(label='Confirm password', required=False)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
 
 
 class NewUserCreationForm(UserCreationForm):
