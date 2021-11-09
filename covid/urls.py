@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import main, add_person, add_laboratory, add_hospital, edit_person, delete_person,\
-    add_city, export_data_xls, export_notification_docx, administration_panel
+    add_city, export_data_xls, export_notification_docx, administration_panel, change_password
 
 
 urlpatterns = [
@@ -13,5 +13,6 @@ urlpatterns = [
     path('add_city/', add_city, name='add_city'),
     path('excel/', export_data_xls, name='export_excel'),
     path('word/<int:id>/', export_notification_docx, name='export_docx'),
-    path('administration_panel', administration_panel, name='administration_panel')
+    path('administration_panel', administration_panel, name='administration_panel'),
+    path('change_password', change_password, name="change_password")
 ]

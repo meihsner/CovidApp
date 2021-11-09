@@ -2,12 +2,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Person, City, Hospital, Laboratory
-from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm, NewUserCreationForm, UpdateUserForm
+from .forms import PersonForm, CityForm, HospitalForm, LaboratoryForm, NewUserCreationForm, UpdateUserForm,\
+    UpdatePasswordForm
 import xlwt
 from django.http import HttpResponse
 from datetime import datetime
 from docx import *
 from django.contrib.auth.models import User
+from django.contrib.auth import update_session_auth_hash
 
 
 @staff_member_required
@@ -32,6 +34,7 @@ def edit_user(request, id):
     return render(request, 'registration/register.html', {'form_user': form_user, 'edit': True})
 
 
+@staff_member_required
 def delete_user(request, id):
     user = get_object_or_404(User, pk=id)
     if request.method == "POST" and id != 1:
@@ -40,6 +43,7 @@ def delete_user(request, id):
     return render(request, 'delete_confirm.html', {'user': user, 'delete_user': True})
 
 
+@staff_member_required
 def activate_deactivate_user(request, id):
     user = get_object_or_404(User, pk=id)
     if request.method == "POST" and id != 1:
@@ -59,6 +63,16 @@ def administration_panel(request):
     except ValueError:
         users = User.objects.all()
     return render(request, 'administration_panel.html', {'users': users})
+
+
+@login_required
+def change_password(request):
+    form_change_password = UpdatePasswordForm(request.user, data=request.POST)
+    if form_change_password.is_valid():
+        form_change_password.save()
+        update_session_auth_hash(request, form_change_password.user)
+        return redirect(main, 'none')
+    return render(request, 'change_password.html', {'form_change_password': form_change_password})
 
 
 @login_required
@@ -89,10 +103,12 @@ def main(request, sort):
 
 @login_required
 def add_person(request):
-    form_person = PersonForm(request.POST or None, initial={'who_added': request.user.username, 'telephone_number': '+48'})
+    current_date = datetime.now().date()
+    current_date = current_date.strftime('%Y-%m-%d')
+    form_person = PersonForm(request.POST or None, initial={'who_added': request.user.username, 'telephone_number': '+48', 'date_of_received_information': current_date})
     if form_person.is_valid():
         form_person.save()
-        return redirect(main)
+        return redirect(main, 'none')
     return render(request, 'add_person.html', {'form_person': form_person, 'edit': False})
 
 
@@ -102,7 +118,7 @@ def edit_person(request, id):
     form_person = PersonForm(request.POST or None, instance=person)
     if form_person.is_valid():
         form_person.save()
-        return redirect(main)
+        return redirect(main, 'none')
     return render(request, 'add_person.html', {'form_person': form_person, 'edit': True})
 
 
@@ -111,7 +127,7 @@ def delete_person(request, id):
     person = get_object_or_404(Person, pk=id)
     if request.method == "POST":
         person.delete()
-        return redirect(main)
+        return redirect(main, 'none')
     return render(request, 'delete_confirm.html', {'person': person, 'delete_user': False})
 
 
@@ -125,7 +141,7 @@ def add_laboratory(request):
     form_laboratory = LaboratoryForm(request.POST or None)
     if form_laboratory.is_valid():
         form_laboratory.save()
-        return redirect(main)
+        return redirect(main, 'none')
     return render(request, 'add_laboratory.html', {'form_laboratory': form_laboratory, 'laboratories': laboratories})
 
 
@@ -139,7 +155,7 @@ def add_hospital(request):
     form_hospital = HospitalForm(request.POST or None)
     if form_hospital.is_valid():
         form_hospital.save()
-        return redirect(main)
+        return redirect(main, 'none')
     return render(request, 'add_hospital.html', {'form_hospital': form_hospital, 'hospitals': hospitals})
 
 
@@ -153,7 +169,7 @@ def add_city(request):
     form_city = CityForm(request.POST or None)
     if form_city.is_valid():
         form_city.save()
-        return redirect(main)
+        return redirect(main, 'none')
     return render(request, 'add_city.html', {'form_city': form_city, 'cities': cities})
 
 

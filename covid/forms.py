@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from .models import Person, City, Laboratory, Hospital
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.core.exceptions import ValidationError
 
 
@@ -30,6 +30,12 @@ class HospitalForm(ModelForm):
         fields = '__all__'
 
 
+class UpdatePasswordForm(PasswordChangeForm):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(label='username', min_length=5, max_length=32)
     email = forms.EmailField(label='email', required=False)
@@ -44,12 +50,12 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class NewUserCreationForm(UserCreationForm):
-    username = forms.CharField(label='username', min_length=5, max_length=32)
-    email = forms.EmailField(label='email')
-    first_name = forms.CharField(label='first_name', max_length=32)
-    last_name = forms.CharField(label='last_name', max_length=32)
-    password1 = forms.CharField(label='password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+    username = forms.CharField(label='username', min_length=5, max_length=32, help_text="To pole jest wymagane.")
+    email = forms.EmailField(label='email', help_text="To pole jest wymagane.")
+    first_name = forms.CharField(label='first_name', max_length=32, help_text="To pole jest wymagane.")
+    last_name = forms.CharField(label='last_name', max_length=32, help_text="To pole jest wymagane.")
+    password1 = forms.CharField(label='password', widget=forms.PasswordInput, help_text="To pole jest wymagane. <br/> <ul> <li> Twoje hasło nie może być zbyt podobne do twoich innych danych osobistych.</li> <li> Twoje hasło musi zawierać co najmniej 8 znaków. </li> <li> Twoje hasło nie może być powszechnie używanym hasłem. </li> <li> Twoje hasło nie może składać się tylko z cyfr. </li></ul>")
+    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput, help_text="To pole jest wymagane.")
 
     def username_clean(self):
         username = self.cleaned_data['username'].lower()
