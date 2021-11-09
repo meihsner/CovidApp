@@ -36,7 +36,7 @@ class UpdateUserForm(forms.ModelForm):
     first_name = forms.CharField(label='first_name', max_length=32)
     last_name = forms.CharField(label='last_name', max_length=32)
     password1 = forms.CharField(label='password', widget=forms.PasswordInput, required=False)
-    password2 = forms.CharField(label='Confirm password', required=False)
+    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput, required=False)
 
     class Meta:
         model = User

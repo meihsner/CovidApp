@@ -40,3 +40,8 @@ td {
 .larger_gap{
     margin-bottom: 18px;
 }
+
+.table_header{
+    color: black;
+    text-decoration: none;
+}

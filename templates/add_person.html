@@ -108,9 +108,9 @@
 
             <br>
             {% if edit %}
-                <button type="submit" class="btn btn-secondary">Edytuj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+                <button type="submit" class="btn btn-secondary">Edytuj</button> <a href="{% url 'main' 'none' %}" class="btn btn-secondary" >Powrót</a>
             {% else %}
-                <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' %}" class="btn btn-secondary" >Powrót</a>
+                <button type="submit" class="btn btn-secondary">Dodaj</button> <a href="{% url 'main' 'none' %}" class="btn btn-secondary" >Powrót</a>
             {% endif %}
         </form>
 {% endblock %}

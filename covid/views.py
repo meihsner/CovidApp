@@ -62,11 +62,28 @@ def administration_panel(request):
 
 
 @login_required
-def main(request):
+def main(request, sort):
     try:
         people = Person.objects.filter(surname__icontains=request.GET.get('search'))
     except ValueError:
-        people = Person.objects.all()
+        if sort == 'name':
+            people = Person.objects.order_by('name')
+        elif sort == 'surname':
+            people = Person.objects.order_by('surname')
+        elif sort == 'age':
+            people = Person.objects.order_by('age')
+        elif sort == 'city':
+            people = Person.objects.order_by('city__name')
+        elif sort == 'quarantine':
+            people = Person.objects.order_by('-quarantine')
+        elif sort == 'hospitalization':
+            people = Person.objects.order_by('-hospitalization')
+        elif sort == 'supervision':
+            people = Person.objects.order_by('-supervision')
+        elif sort == 'who_added':
+            people = Person.objects.order_by('who_added')
+        else:
+            people = Person.objects.all()
     return render(request, 'main.html', {'people': people})
 
 

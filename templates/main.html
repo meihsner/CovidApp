@@ -46,14 +46,14 @@
     <table class="table table-bordered table-striped scroll_table">
       <thead>
         <tr>
-          <th scope="col">Imię</th>
-          <th scope="col">Nazwisko</th>
-          <th scope="col">Wiek</th>
-          <th scope="col">Miasto</th>
-          <th scope="col">Kwarantanna</th>
-          <th scope="col">Hospitalizacja</th>
-          <th scope="col">Nadzór</th>
-          <th scope="col">Dodał</th>
+          <th scope="col"><a href="{% url 'main' 'name' %}" class="table_header" data-toggle="tooltip" title="Sortuj według imienia">Imię</a></th>
+          <th scope="col"><a href="{% url 'main' 'surname' %}" class="table_header" data-toggle="tooltip" title="Sortuj według nazwiska">Nazwisko</a></th>
+          <th scope="col"><a href="{% url 'main' 'age' %}" class="table_header" data-toggle="tooltip" title="Sortuj według wieku">Wiek</a></th>
+          <th scope="col"><a href="{% url 'main' 'city' %}" class="table_header" data-toggle="tooltip" title="Sortuj według miasta">Miasto</a></th>
+          <th scope="col"><a href="{% url 'main' 'quarantine' %}" class="table_header" data-toggle="tooltip" title="Sortuj według kwarantanny">Kwarantanna</a></th>
+          <th scope="col"><a href="{% url 'main' 'hospitalization' %}" class="table_header" data-toggle="tooltip" title="Sortuj według hospitalizacji">Hospitalizacja</a></th>
+          <th scope="col"><a href="{% url 'main' 'supervision' %}" class="table_header" data-toggle="tooltip" title="Sortuj według nadzoru">Nadzór</a></th>
+          <th scope="col"><a href="{% url 'main' 'who_added' %}" class="table_header" data-toggle="tooltip" title="Sortuj według osoby dodającej">Dodał</a></th>
           <th scope="col"></th>
         </tr>
       </thead>
