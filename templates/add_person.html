@@ -18,37 +18,65 @@
             <div class="row">
                 <div class="col-6">
                     <div class="fieldWrapper">
-                        <label class="add_label">Imię:</label>
+                        {% if edit %}
+                            <label class="add_label">Imię:</label>
+                        {% else %}
+                            <label class="add_label">Imię<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.name|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Nazwisko:</label>
+                        {% if edit %}
+                            <label class="add_label">Nazwisko:</label>
+                        {% else %}
+                            <label class="add_label">Nazwisko<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.surname|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Płeć:</label>
+                        {% if edit %}
+                            <label class="add_label">Płeć:</label>
+                        {% else %}
+                            <label class="add_label">Płeć<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.gender|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Wiek:</label>
+                        {% if edit %}
+                            <label class="add_label">Wiek:</label>
+                        {% else %}
+                            <label class="add_label">Wiek<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.age|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Adres:</label>
+                        {% if edit %}
+                            <label class="add_label">Adres:</label>
+                        {% else %}
+                            <label class="add_label">Adres<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.address|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Miejscowość zamieszkania chorego:</label>
+                        {% if edit %}
+                            <label class="add_label">Miejscowość zamieszkania chorego:</label>
+                        {% else %}
+                            <label class="add_label">Miejscowość zamieszkania chorego<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.city|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Numer telefonu:</label>
+                        {% if edit %}
+                            <label class="add_label">Numer telefonu:</label>
+                        {% else %}
+                            <label class="add_label">Numer telefonu<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.telephone_number|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
@@ -63,14 +91,22 @@
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Laboratorium wykonujące badanie:</label>
+                        {% if edit %}
+                            <label class="add_label">Laboratorium wykonujące badanie:</label>
+                        {% else %}
+                            <label class="add_label">Laboratorium wykonujące badanie<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.laboratory_performing_tests|bootstrap_inline }}
                     </div>
                 </div>
 
                 <div class="col-6">
                     <div class="fieldWrapper">
-                        <label class="add_label">Miejscowość pobytu chorego:</label>
+                        {% if edit %}
+                            <label class="add_label">Miejscowość pobytu chorego:</label>
+                        {% else %}
+                            <label class="add_label">Miejscowość pobytu chorego<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.whereabouts|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
@@ -80,27 +116,47 @@
                     </div>
                     <div class="larger_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Hospitalizowany:</label>
+                        {% if edit %}
+                            <label class="add_label">Hospitalizowany:</label>
+                        {% else %}
+                            <label class="add_label">Hospitalizowany<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.hospitalization|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Nazwa szpitala:</label>
+                        {% if edit %}
+                            <label class="add_label">Nazwa szpitala:</label>
+                        {% else %}
+                            <label class="add_label">Nazwa szpitala<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane, jeżeli osoba jest hospitalizowana!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.hospital|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Objęty nadzorem:</label>
+                        {% if edit %}
+                            <label class="add_label">Objęty nadzorem:</label>
+                        {% else %}
+                            <label class="add_label">Objęty nadzorem<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.supervision|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Poddany kwarantannie:</label>
+                        {% if edit %}
+                            <label class="add_label">Poddany kwarantannie:</label>
+                        {% else %}
+                            <label class="add_label">Poddany kwarantannie<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.quarantine|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Użytkownik wprowadzający osobę:</label>
+                        {% if edit %}
+                            <label class="add_label">Użytkownik wprowadzający osobę:</label>
+                        {% else %}
+                            <label class="add_label">Użytkownik wprowadzający osobę<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+                        {% endif %}
                         {{ form_person.who_added|bootstrap_inline }}
                     </div>
                 </div>

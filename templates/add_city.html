@@ -18,17 +18,17 @@
             <div class="col-6">
                 <h3>Formularz:</h3>
                     <div class="fieldWrapper">
-                        <label class="add_label">Nazwa:</label>
+                        <label class="add_label">Nazwa<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
                         {{ form_city.name|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Powiat:</label>
+                        <label class="add_label">Powiat<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
                         {{ form_city.county|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Województwo:</label>
+                        <label class="add_label">Województwo<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
                         {{ form_city.province|bootstrap_inline }}
                     </div>
                     <br>
@@ -49,7 +49,7 @@
                         <tr>
                           <td>{{ city.name}}</td>
                           <td>{{ city.county }}</td>
-                          <td>{{ city.province }}</td>
+                          <td>{{ city.get_province_display }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

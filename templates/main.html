@@ -13,7 +13,7 @@
       <li class="nav-item">
         <div class="dropdown">
           {% if perms.covid %}
-          <a href="{% url 'administration_panel' %}" class="btn btn-secondary">Panel administracyjny </a> <a href="{% url 'add_person' %}" class="btn btn-secondary">Dodaj osobę</a> <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> Dodaj miejsce </a> <a href="{% url 'export_excel' %}" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></a> <a href="{% url 'change_password' %}" class="btn btn-secondary">Zmień hasło</a> <a href="{% url 'logout' %}" class="btn btn-secondary">Wyloguj</a>
+          <a href="{% url 'administration_panel' %}" class="btn btn-secondary">Panel administracyjny</a> <a href="{% url 'add_person' %}" class="btn btn-secondary">Dodaj osobę</a> <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> Dodaj miejsce </a> <a href="{% url 'export_excel' %}" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></a> <a href="{% url 'change_password' %}" class="btn btn-secondary">Zmień hasło</a> <a href="{% url 'logout' %}" class="btn btn-secondary">Wyloguj</a>
           {% else %}
           <a href="{% url 'add_person' %}" class="btn btn-secondary">Dodaj osobę</a> <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> Dodaj miejsce </a> <a href="{% url 'export_excel' %}" class="btn btn-secondary">Eksportuj formularz <i class="fas fa-table"></i></a>  <a href="{% url 'change_password' %}" class="btn btn-secondary">Zmień hasło</a> <a href="{% url 'logout' %}" class="btn btn-secondary">Wyloguj</a>
           {% endif %}
@@ -63,7 +63,7 @@
           <td>{{ person.name }}</td>
           <td>{{ person.surname }}</td>
           <td>{{ person.age }}</td>
-          <td>{{ person.city }}</td>
+          <td>{{ person.city }} ({{ person.city.get_province_display }})</td>
           <td>{{ person.get_quarantine_display }}</td>
           <td>{{ person.get_hospitalization_display }}</td>
           <td>{{ person.get_supervision_display }}</td>

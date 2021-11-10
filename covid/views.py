@@ -184,7 +184,7 @@ def export_data_xls(request):
 
     # Sheet header, first row
     row_num = 0
-    column_width = [7, 20, 20, 7, 7, 30, 20, 30, 30, 30, 30, 30, 25, 27, 27, 25]
+    column_width = [7, 20, 20, 20, 7, 30, 20, 30, 30, 30, 30, 30, 25, 27, 27, 25]
     for idx in range(0, len(column_width)):
         ws.col(idx).width = 256 * column_width[idx]
 

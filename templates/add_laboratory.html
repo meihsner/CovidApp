@@ -19,17 +19,17 @@
             <div class="col-6">
                 <h3>Formularz:</h3>
                     <div class="fieldWrapper">
-                        <label class="add_label">Nazwa:</label>
+                        <label class="add_label">Nazwa<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
                         {{ form_laboratory.name|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Adres:</label>
+                        <label class="add_label">Adres<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
                         {{ form_laboratory.address|bootstrap_inline }}
                     </div>
                     <div class="form_gap"></div>
                     <div class="fieldWrapper">
-                        <label class="add_label">Miasto:</label>
+                        <label class="add_label">Miasto<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span> :</label>
                         {{ form_laboratory.city|bootstrap_inline }}
                     </div>
                   <br>

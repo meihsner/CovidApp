@@ -14,34 +14,55 @@
 {% block card_body%}
     <form method="post">
         {% csrf_token %}
+
         <div class="fieldWrapper">
+            {% if not edit %}
+            <label class="add_label">Nazwa użytkownika<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+            {% else %}
             <label class="add_label">Nazwa użytkownika:</label>
+            {% endif %}
             {{ form_user.username|bootstrap_inline }}
         </div>
+
         <div class="form_gap"></div>
         <div class="fieldWrapper">
+            {% if not edit %}
+            <label class="add_label">Email<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+            {% else %}
             <label class="add_label">Email:</label>
+            {% endif %}
             {{ form_user.email|bootstrap_inline }}
         </div>
+
         <div class="form_gap"></div>
         <div class="fieldWrapper">
+            {% if not edit %}
+            <label class="add_label">Imię<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+            {% else %}
             <label class="add_label">Imię:</label>
+            {% endif %}
             {{ form_user.first_name|bootstrap_inline }}
         </div>
+
         <div class="form_gap"></div>
         <div class="fieldWrapper">
+            {% if not edit %}
+            <label class="add_label">Nazwisko<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
+            {% else %}
             <label class="add_label">Nazwisko:</label>
+            {% endif %}
             {{ form_user.last_name|bootstrap_inline }}
         </div>
+
         {% if not edit %}
             <div class="form_gap"></div>
             <div class="fieldWrapper">
-                <label class="add_label">Hasło:</label>
+                <label class="add_label">Hasło<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
                 {{ form_user.password1|bootstrap_inline }}
             </div>
             <div class="form_gap"></div>
             <div class="fieldWrapper">
-                <label class="add_label">Powtórz hasło:</label>
+                <label class="add_label">Powtórz hasło<span style="color:red" data-toggle="tooltip" title="To pole jest wymagane!"><b>*</b></span>:</label>
                 {{ form_user.password2|bootstrap_inline }}
             </div>
         {% endif %}

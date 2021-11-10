@@ -3,15 +3,34 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class City(models.Model):
+    PROVINCE = {
+        (1, 'Dolnośląskie'),
+        (2, 'Kujawsko-pomorskie'),
+        (3, 'Lubelskie'),
+        (4, 'Lubuskie'),
+        (5, 'Łódzkie'),
+        (6, 'Małopolskie'),
+        (7, 'Mazowieckie'),
+        (8, 'Opolskie'),
+        (9, 'Podkarpackie'),
+        (10, 'Podlaskie'),
+        (11, 'Pomorskie'),
+        (12, 'Śląskie'),
+        (13, 'Świętokrzyskie'),
+        (14, 'Warmińsko-mazurskie'),
+        (15, 'Wielkopolskie'),
+        (16, 'Zachodniopomorskie'),
+    }
+
     name = models.CharField(max_length=32)
     county = models.CharField(max_length=32)
-    province = models.CharField(max_length=32)
+    province = models.PositiveSmallIntegerField(choices=PROVINCE, default=1)
 
     def __str__(self):
         return self.name_province()
 
     def name_province(self):
-        return "{} ({})".format(self.name, self.province)
+        return "{}".format(self.name)
 
 
 class Laboratory(models.Model):
